@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice Shop</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <a href="#" class="brand" data-view="products">Practice Shop</a>
+  <nav>
+    <button type="button" data-view="products">Products</button>
+    <button type="button" data-view="cart" id="nav-cart">Cart (0)</button>
+    <button type="button" data-view="orders" id="nav-orders" class="hidden">My orders</button>
+    <button type="button" data-view="login" id="nav-login">Login</button>
+    <button type="button" data-view="register" id="nav-register">Register</button>
+    <button type="button" id="nav-logout" class="hidden">Logout</button>
+  </nav>
+  <span id="whoami"></span>
+</header>
+
+<main>
+  <div id="flash" role="status"></div>
+
+  <section id="view-register" class="view hidden">
+    <h1>Create account</h1>
+    <form id="register-form" novalidate>
+      <label for="reg-name">Full name</label>
+      <input id="reg-name" autocomplete="off">
+      <span class="field-error" id="err-name"></span>
+
+      <label for="reg-email">Email</label>
+      <input id="reg-email" type="email" autocomplete="off">
+      <span class="field-error" id="err-email"></span>
+
+      <label for="reg-phone">Phone</label>
+      <input id="reg-phone" inputmode="numeric" autocomplete="off">
+      <span class="field-error" id="err-phone"></span>
+
+      <label for="reg-password">Password</label>
+      <input id="reg-password" type="password">
+      <span class="field-error" id="err-password"></span>
+
+      <label for="reg-confirm">Confirm password</label>
+      <input id="reg-confirm" type="password">
+      <span class="field-error" id="err-confirm_password"></span>
+
+      <button type="submit">Create account</button>
+    </form>
+  </section>
+
+  <section id="view-login" class="view hidden">
+    <h1>Login</h1>
+    <form id="login-form" novalidate>
+      <label for="login-email">Email</label>
+      <input id="login-email" autocomplete="off">
+      <label for="login-password">Password</label>
+      <input id="login-password" type="password">
+      <div class="field-error" id="login-error" role="alert"></div>
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <section id="view-products" class="view">
+    <h1>Products</h1>
+    <form id="search-form" class="toolbar">
+      <div>
+        <label for="search-q">Search products</label>
+        <input id="search-q" autocomplete="off">
+      </div>
+      <div>
+        <label for="search-category">Category</label>
+        <select id="search-category">
+          <option value="">All</option>
+          <option>Fashion</option>
+          <option>Electronics</option>
+          <option>Home</option>
+          <option>Sports</option>
+        </select>
+      </div>
+      <div>
+        <label for="search-sort">Sort by</label>
+        <select id="search-sort">
+          <option value="">Default</option>
+          <option value="price_asc">Price: low to high</option>
+          <option value="price_desc">Price: high to low</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
+      <button type="submit">Search</button>
+    </form>
+    <div id="product-count"></div>
+    <div id="product-list" class="grid"></div>
+    <p id="no-products" class="hidden">No products found</p>
+  </section>
+
+  <section id="view-cart" class="view hidden">
+    <h1>Your cart</h1>
+    <p id="cart-empty" class="hidden">Your cart is empty</p>
+    <table id="cart-table">
+      <thead><tr><th>Product</th><th>Price</th><th>Quantity</th><th>Total</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="cart-summary">
+      <div>Subtotal: <span id="sum-subtotal"></span></div>
+      <div>Discount: <span id="sum-discount"></span></div>
+      <div>Shipping: <span id="sum-shipping"></span></div>
+      <div class="grand">Total: <span id="sum-total"></span></div>
+    </div>
+    <form id="coupon-form" class="toolbar">
+      <div>
+        <label for="coupon-code">Coupon code</label>
+        <input id="coupon-code" autocomplete="off">
+      </div>
+      <button type="submit">Apply</button>
+      <button type="button" id="coupon-remove" class="hidden">Remove coupon</button>
+    </form>
+    <div id="cart-error" class="field-error" role="alert"></div>
+    <button type="button" id="to-checkout">Proceed to checkout</button>
+  </section>
+
+  <section id="view-checkout" class="view hidden">
+    <h1>Checkout</h1>
+    <form id="checkout-form" novalidate>
+      <label for="co-name">Full name</label>
+      <input id="co-name" autocomplete="off">
+      <span class="field-error" id="err-co-name"></span>
+
+      <label for="co-line1">Address</label>
+      <input id="co-line1" autocomplete="off">
+      <span class="field-error" id="err-co-line1"></span>
+
+      <label for="co-city">City</label>
+      <input id="co-city" autocomplete="off">
+      <span class="field-error" id="err-co-city"></span>
+
+      <label for="co-pincode">Pincode</label>
+      <input id="co-pincode" inputmode="numeric" autocomplete="off">
+      <span class="field-error" id="err-co-pincode"></span>
+
+      <label for="co-phone">Phone</label>
+      <input id="co-phone" inputmode="numeric" autocomplete="off">
+      <span class="field-error" id="err-co-phone"></span>
+
+      <label for="co-payment">Payment method</label>
+      <select id="co-payment">
+        <option value="COD">Cash on Delivery</option>
+        <option value="UPI">UPI</option>
+      </select>
+      <span class="field-error" id="err-co-payment_method"></span>
+
+      <div id="upi-row" class="hidden">
+        <label for="co-upi">UPI id</label>
+        <input id="co-upi" autocomplete="off">
+        <span class="field-error" id="err-co-upi_id"></span>
+      </div>
+
+      <p>Amount to pay: <strong id="co-total"></strong></p>
+      <div id="checkout-error" class="field-error" role="alert"></div>
+      <button type="submit">Place order</button>
+    </form>
+  </section>
+
+  <section id="view-confirm" class="view hidden">
+    <h1>Order placed</h1>
+    <p id="confirm-text"></p>
+    <button type="button" data-view="products">Continue shopping</button>
+  </section>
+
+  <section id="view-orders" class="view hidden">
+    <h1>My orders</h1>
+    <p id="orders-empty" class="hidden">You have not placed any orders yet</p>
+    <table id="orders-table">
+      <thead><tr><th>Order</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="order-detail" class="hidden"></div>
+  </section>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>

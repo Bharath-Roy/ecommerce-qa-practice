@@ -1,0 +1,35 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f5f7; color: #222; }
+header { background: #232f3e; color: #fff; padding: 10px 20px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+header .brand { color: #fff; font-weight: bold; font-size: 18px; text-decoration: none; margin-right: 12px; }
+header nav { display: flex; flex-wrap: wrap; gap: 6px; }
+header nav button { background: none; border: 1px solid #5c6b7c; color: #fff; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+header nav button:hover { background: #37475a; }
+#whoami { margin-left: auto; font-size: 14px; }
+main { max-width: 980px; margin: 20px auto; padding: 0 16px; }
+.view { background: #fff; border: 1px solid #dcdfe3; border-radius: 4px; padding: 16px; }
+h1 { font-size: 20px; margin: 0 0 12px; }
+label { display: block; margin: 10px 0 3px; font-size: 14px; }
+input, select { padding: 6px; width: 100%; max-width: 340px; }
+button { padding: 7px 14px; cursor: pointer; margin-top: 10px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 12px; }
+.toolbar button { margin-top: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
+.card { border: 1px solid #dcdfe3; border-radius: 4px; padding: 10px; background: #fafafa; }
+.card h3 { margin: 0 0 6px; font-size: 16px; }
+.card .meta { font-size: 13px; color: #555; }
+.card .price { font-weight: bold; margin: 6px 0; }
+.stock-low { color: #b45b00; }
+.stock-out { color: #b00020; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; margin-bottom: 12px; }
+th, td { border-bottom: 1px solid #e3e6ea; padding: 6px 8px; text-align: left; }
+td input { width: 64px; }
+.field-error { display: block; color: #b00020; font-size: 13px; min-height: 16px; }
+.ok { color: #1b6e2d; }
+.grand { font-weight: bold; margin-top: 4px; }
+#flash { min-height: 20px; margin-bottom: 8px; font-size: 14px; }
+.hidden { display: none; }
+@media (max-width: 600px) {
+  header { padding: 10px; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+}
