@@ -1,0 +1,76 @@
+Summary,Issue Type,Priority,Labels,Description
+Password with exactly 8 characters is rejected,Bug,Medium,registration,"Build 1.0, severity Minor
+
+Open Register and enter valid details with password Abcd@123 (8 characters, including upper case, lower case, a digit and a special character).
+
+Expected: account created. Minimum length is 8.
+Actual: 400 WEAK_PASSWORD. A 9 character password works; 7 is rejected correctly.
+
+Test case: TC-REG-07"
+Same email in a different case registers a second account,Bug,High,registration,"Build 1.0, severity Major
+
+meera@example.com already exists. Register Meera@Example.com with otherwise valid details.
+
+This should return 409 EMAIL_EXISTS. It returns 201 and creates another account. Q4 shows meera@example.com with accounts = 2. The new account's password does not work at login.
+
+Test cases: TC-REG-12, TC-DB-04"
+Search only matches when the case is the same,Bug,High,search,"Build 1.0, severity Major
+
+Search for SHOES: expected Running Shoes, actual ""No products found"".
+Search for pack: expected Laptop Backpack and Notebook Pack of 5, actual only Laptop Backpack.
+
+Search should ignore upper/lower case.
+
+Test cases: TC-SRC-03, TC-SRC-04"
+Searching for % or _ returns every product,Bug,Low,search,"Build 1.0, severity Minor
+
+Search for %, then for _. Both return all 12 products. Expected no results because neither character is in a product name.
+
+The search text is used in a LIKE pattern without escaping the wildcard characters.
+
+Test case: TC-SRC-07"
+"More than the stock can be bought, stock goes negative",Bug,High,cart,"Build 1.0, severity Major
+
+Start each check from reset data:
+1. Add 1 Smart Watch (stock 3), then update quantity to 5. Expected 409 INSUFFICIENT_STOCK; update is accepted.
+2. Meera and Arjun each add 3 Smart Watches. Meera orders first, then Arjun. Arjun's order should be refused, but both succeed and stock reaches -3.
+
+The orders are sequential. This is not a concurrency test.
+
+Test cases: TC-CRT-10, TC-CHK-14, TC-DB-02"
+Shipping charged on a cart of exactly 500.00,Bug,Medium,cart,"Build 1.0, severity Minor
+
+Add 1 Steel Water Bottle, priced at 500.00, and check the cart totals.
+
+Expected shipping 0.00 and total 500.00. Actual shipping 49.00 and total 549.00. Free shipping should start at exactly 500.00.
+
+Test case: TC-CRT-14"
+Coupon discount is not capped at 150.00,Bug,High,coupon,"Build 1.0, severity Major
+
+Add Running Shoes (2499.00) and apply WELCOME10.
+
+Discount should stop at 150.00, giving a total of 2349.00. The cart takes off 249.90 instead and shows total 2249.10.
+
+Test case: TC-CPN-02"
+Pincode with 7 digits is accepted,Bug,Medium,checkout,"Build 1.0, severity Minor
+
+At checkout, use pincode 5000011 with a product in the cart and valid values in the other fields.
+
+Expected a pincode error. The order is placed with the 7 digit pincode.
+
+Test case: TC-CHK-07"
+My orders shows the total without shipping,Bug,Medium,orders,"Build 1.0, severity Major
+
+Order 1 Ceramic Coffee Mug (199.00 plus 49.00 shipping). Confirmation shows 248.00. Open My orders: it shows 199.00 instead of 248.00.
+
+Order details and the database both have the correct total, 248.00. Only the list leaves out shipping.
+
+Test cases: TC-ORD-01, TC-ORD-07, TC-DB-06"
+Any logged in user can open someone else's order,Bug,High,orders,"Build 1.0, severity Critical
+
+Meera places an order. Note the number, then request GET /api/orders/{order number} using Arjun's login token.
+
+Expected: 404 ORDER_NOT_FOUND.
+Actual: 200 with Meera's items, name, address and phone number.
+
+Test case: TC-ORD-04"
